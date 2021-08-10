@@ -6,3 +6,17 @@ export async function readCredentials(): Promise<Credential[]> {
   const db: DB = JSON.parse(dbData);
   return db.credentials;
 }
+
+export async function getCredential(service: string): Promise<Credential> {
+  const credentials = await readCredentials();
+  if (!credentials) throw new Error(`No credentials found`);
+
+  const searchedCredential = credentials.find(
+    (credential) => credential.service === service
+  );
+
+  if (!searchedCredential)
+    throw new Error(`No credential found for service ${service}`);
+
+  return searchedCredential;
+}
