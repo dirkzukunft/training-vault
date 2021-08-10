@@ -1,0 +1,9 @@
+{
+  "credentials": [
+    {
+      "service": "google",
+      "username": "mustermann",
+      "password": "aaa123"
+    }
+  ]
+}
