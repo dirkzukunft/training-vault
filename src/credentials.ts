@@ -2,14 +2,17 @@ import { readFile } from 'fs/promises';
 import { DB, Credential } from './types';
 
 export async function readCredentials(): Promise<Credential[]> {
-  const dbData = await readFile('./src/db.json', 'utf-8');
-  const db: DB = JSON.parse(dbData);
-  return db.credentials;
+  try {
+    const dbData = await readFile('./src/db2.json', 'utf-8');
+    const db: DB = JSON.parse(dbData);
+    return db.credentials;
+  } catch (error) {
+    throw new Error('Could not load credentials from database');
+  }
 }
 
 export async function getCredential(service: string): Promise<Credential> {
   const credentials = await readCredentials();
-  if (!credentials) throw new Error(`No credentials found`);
 
   const credential = credentials.find(
     (credential) => credential.service === service
