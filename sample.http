@@ -12,7 +12,10 @@ POST http://localhost:3000/api/credentials/
 Content-Type: application/json
 
 {
-    "service": "neu",
-    "username": "neu",
+    "service": "neu3",
+    "username": "neu3",
     "password": "aaa123"
 }
+
+###
+DELETE http://localhost:3000/api/credentials/deleteme
