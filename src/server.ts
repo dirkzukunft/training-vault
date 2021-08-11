@@ -1,5 +1,10 @@
 import express from 'express';
-import { addCredential, getCredential, readCredentials } from './credentials';
+import {
+  addCredential,
+  deleteCredential,
+  getCredential,
+  readCredentials,
+} from './credentials';
 import { Credential } from './types';
 const port = 3000;
 const app = express();
@@ -33,6 +38,17 @@ app.post('/api/credentials/', async (req, res) => {
     res.status(200).json(credential);
   } catch (error) {
     res.status(500).send('Could not add credentials');
+    console.log(error);
+  }
+});
+
+app.delete('/api/credentials/:service', async (req, res) => {
+  const { service } = req.params;
+  try {
+    await deleteCredential(service);
+    res.status(200).send('');
+  } catch (error) {
+    res.status(500).send(`Could not delete credential ${service}`);
     console.log(error);
   }
 });
