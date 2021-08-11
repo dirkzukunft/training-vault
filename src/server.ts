@@ -1,7 +1,9 @@
 import express from 'express';
-import { getCredential, readCredentials } from './credentials';
-const app = express();
+import { addCredential, getCredential, readCredentials } from './credentials';
+import { Credential } from './types';
 const port = 3000;
+const app = express();
+app.use(express.json());
 
 app.get('/api/credentials/:service', async (req, res) => {
   const { service } = req.params;
@@ -20,6 +22,17 @@ app.get('/api/credentials/', async (_req, res) => {
     res.status(200).json(credentials);
   } catch (error) {
     res.status(500).send('No credentials found');
+    console.log(error);
+  }
+});
+
+app.post('/api/credentials/', async (req, res) => {
+  try {
+    const credential: Credential = req.body;
+    await addCredential(credential);
+    res.status(200).json(credential);
+  } catch (error) {
+    res.status(500).send('Could not add credentials');
     console.log(error);
   }
 });
