@@ -1,0 +1,18 @@
+### All credentials
+GET http://localhost:3000/api/credentials/
+
+### Valid credential request
+GET http://localhost:3000/api/credentials/google
+
+### Invalid credential request
+GET http://localhost:3000/api/credentials/xyz
+
+### Add a new credential
+POST http://localhost:3000/api/credentials/
+Content-Type: application/json
+
+{
+    "service": "neu",
+    "username": "neu",
+    "password": "aaa123"
+}
