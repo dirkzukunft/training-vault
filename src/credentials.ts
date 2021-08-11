@@ -11,12 +11,12 @@ export async function getCredential(service: string): Promise<Credential> {
   const credentials = await readCredentials();
   if (!credentials) throw new Error(`No credentials found`);
 
-  const searchedCredential = credentials.find(
+  const credential = credentials.find(
     (credential) => credential.service === service
   );
 
-  if (!searchedCredential)
+  if (!credential)
     throw new Error(`No credential found for service ${service}`);
 
-  return searchedCredential;
+  return credential;
 }
