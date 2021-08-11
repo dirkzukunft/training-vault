@@ -40,7 +40,7 @@ export async function deleteCredential(service: string): Promise<void> {
 
 async function setCredentials(credentials: Credential[]) {
   const newDB: DB = { credentials: credentials };
-  setDB(newDB);
+  await setDB(newDB);
 }
 
 async function setDB(newDB: DB): Promise<void> {
