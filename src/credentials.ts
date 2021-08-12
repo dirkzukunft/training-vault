@@ -38,11 +38,19 @@ export async function deleteCredential(service: string): Promise<void> {
   await setCredentials(filteredCredentials);
 }
 
-async function setCredentials(credentials: Credential[]) {
-  const newDB: DB = { credentials: credentials };
-  await setDB(newDB);
+export async function updateCredential(
+  service: string,
+  credential: Credential
+): Promise<void> {
+  const credentials = await readCredentials();
+  const filteredCredentials = credentials.filter(
+    (credential) => credential.service !== service
+  );
+  const newCredentials = [...filteredCredentials, credential];
+  await setCredentials(newCredentials);
 }
 
-async function setDB(newDB: DB): Promise<void> {
+async function setCredentials(credentials: Credential[]) {
+  const newDB: DB = { credentials: credentials };
   await writeFile('./src/db.json', JSON.stringify(newDB, null, 2));
 }
