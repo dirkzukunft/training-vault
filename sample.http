@@ -1,31 +1,41 @@
 ### All credentials
 GET http://localhost:3000/api/credentials/
+Authorization: mykey
 
 ### Valid credential request
 GET http://localhost:3000/api/credentials/google
+Authorization: mykey
 
 ### Invalid credential request
 GET http://localhost:3000/api/credentials/xyz
+Authorization: mykey
+
+### Invalid credential request
+GET http://localhost:3000/api/credentials/google
+Authorization: wrongKey
 
 ### Add a new credential
 POST http://localhost:3000/api/credentials/
 Content-Type: application/json
+Authorization: mykey
 
 {
     "service": "deleteme",
-    "username": "neu3",
-    "password": "aaa123"
+    "username": "bullshit",
+    "password": "nothing"
 }
 
 ###
 DELETE http://localhost:3000/api/credentials/deleteme
+Authorization: mykey
 
 ### Add a new credential
 PUT http://localhost:3000/api/credentials/deleteme
 Content-Type: application/json
+Authorization: mykey
 
 {
     "service": "deleteme",
-    "username": "neu4",
+    "username": "neu",
     "password": "neuesPw"
 }
