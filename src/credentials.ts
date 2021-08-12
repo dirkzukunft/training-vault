@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
+import { cryptCredential } from './crypto';
 import { DB, Credential } from './types';
 
 export async function readCredentials(): Promise<Credential[]> {
@@ -26,7 +27,7 @@ export async function getCredential(service: string): Promise<Credential> {
 
 export async function addCredential(credential: Credential): Promise<void> {
   const credentials = await readCredentials();
-  const newCredentials = [...credentials, credential];
+  const newCredentials = [...credentials, cryptCredential(credential)];
   await setCredentials(newCredentials);
 }
 
@@ -46,7 +47,7 @@ export async function updateCredential(
   const filteredCredentials = credentials.filter(
     (credential) => credential.service !== service
   );
-  const newCredentials = [...filteredCredentials, credential];
+  const newCredentials = [...filteredCredentials, cryptCredential(credential)];
   await setCredentials(newCredentials);
 }
 
