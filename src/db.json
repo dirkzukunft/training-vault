@@ -1,19 +1,24 @@
 {
   "credentials": [
     {
-      "service": "facebook",
-      "username": "neu4",
-      "password": "U2FsdGVkX1+76TnY7xgNtND4xqIVTAPB"
+      "service": "google",
+      "username": "googleMan",
+      "password": "U2FsdGVkX1/zPBFBRApXtIUsT/ndxOw+CHE8nRguqKg="
     },
     {
-      "service": "google",
-      "username": "neu3",
-      "password": "U2FsdGVkX194L4vK6ZgsfYfVWFV++upy"
+      "service": "facebook",
+      "username": "faceMan",
+      "password": "U2FsdGVkX19JdvtdL4JN+vYesxdtzDiRtiPBfFbw+l0="
+    },
+    {
+      "service": "twitter",
+      "username": "Vogel",
+      "password": "U2FsdGVkX1+zKIbLLeEjWRi0rJPV02lM"
     },
     {
       "service": "deleteme",
-      "username": "neu4",
-      "password": "U2FsdGVkX19EVpf/duIlDjVCdFkO7hI+"
+      "username": "neu",
+      "password": "U2FsdGVkX1+JtV9zLrRSRjdAY5wP2YBy"
     }
   ]
 }
