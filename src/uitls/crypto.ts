@@ -1,20 +1,24 @@
 import CryptoJS from 'crypto-js';
-import { Credential } from './types';
+import { Credential } from '../types';
 
-const masterKey = 'meinMasterKey';
-
-export function encryptCredential(credential: Credential): Credential {
+export function encryptCredential(
+  credential: Credential,
+  key: string
+): Credential {
   const encryptedPassword = CryptoJS.TripleDES.encrypt(
     credential.password,
-    masterKey
+    key
   ).toString();
   return { ...credential, password: encryptedPassword };
 }
 
-export function decryptCredential(credential: Credential): Credential {
+export function decryptCredential(
+  credential: Credential,
+  key: string
+): Credential {
   const decryptedPassword = CryptoJS.TripleDES.decrypt(
     credential.password,
-    masterKey
+    key
   ).toString(CryptoJS.enc.Utf8);
   return { ...credential, password: decryptedPassword };
 }
