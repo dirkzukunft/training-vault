@@ -1,19 +1,19 @@
 {
   "credentials": [
     {
-      "service": "google",
-      "username": "googleman",
-      "password": "aaa123"
-    },
-    {
-      "service": "twitter",
-      "username": "twitterman",
-      "password": "aaa123"
-    },
-    {
       "service": "facebook",
-      "username": "faceman",
-      "password": "aaa123"
+      "username": "neu4",
+      "password": "U2FsdGVkX1+76TnY7xgNtND4xqIVTAPB"
+    },
+    {
+      "service": "google",
+      "username": "neu3",
+      "password": "U2FsdGVkX194L4vK6ZgsfYfVWFV++upy"
+    },
+    {
+      "service": "deleteme",
+      "username": "neu4",
+      "password": "U2FsdGVkX19EVpf/duIlDjVCdFkO7hI+"
     }
   ]
 }

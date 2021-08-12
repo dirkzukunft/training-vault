@@ -2,8 +2,8 @@ import express from 'express';
 import {
   addCredential,
   deleteCredential,
+  getAllCredentials,
   getCredential,
-  readCredentials,
   updateCredential,
 } from './credentials';
 import { Credential } from './types';
@@ -24,7 +24,7 @@ app.get('/api/credentials/:service', async (req, res) => {
 
 app.get('/api/credentials/', async (_req, res) => {
   try {
-    const credentials = await readCredentials();
+    const credentials = await getAllCredentials();
     res.status(200).json(credentials);
   } catch (error) {
     res.status(500).send('No credentials found');

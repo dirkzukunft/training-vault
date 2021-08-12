@@ -27,5 +27,5 @@ Content-Type: application/json
 {
     "service": "deleteme",
     "username": "neu4",
-    "password": "aaa124"
+    "password": "neuesPw"
 }

@@ -1,8 +1,8 @@
 import { readFile, writeFile } from 'fs/promises';
-import { cryptCredential } from './crypto';
+import { encryptCredential, decryptCredential } from './crypto';
 import { DB, Credential } from './types';
 
-export async function readCredentials(): Promise<Credential[]> {
+async function readCredentials(): Promise<Credential[]> {
   try {
     const dbData = await readFile('./src/db.json', 'utf-8');
     const db: DB = JSON.parse(dbData);
@@ -10,6 +10,14 @@ export async function readCredentials(): Promise<Credential[]> {
   } catch (error) {
     throw new Error('Could not load credentials from database');
   }
+}
+
+export async function getAllCredentials(): Promise<Credential[]> {
+  const credentials = await readCredentials();
+  const decryptedCredentials = credentials.map((credential) =>
+    decryptCredential(credential)
+  );
+  return decryptedCredentials;
 }
 
 export async function getCredential(service: string): Promise<Credential> {
@@ -27,7 +35,7 @@ export async function getCredential(service: string): Promise<Credential> {
 
 export async function addCredential(credential: Credential): Promise<void> {
   const credentials = await readCredentials();
-  const newCredentials = [...credentials, cryptCredential(credential)];
+  const newCredentials = [...credentials, encryptCredential(credential)];
   await setCredentials(newCredentials);
 }
 
@@ -47,7 +55,10 @@ export async function updateCredential(
   const filteredCredentials = credentials.filter(
     (credential) => credential.service !== service
   );
-  const newCredentials = [...filteredCredentials, cryptCredential(credential)];
+  const newCredentials = [
+    ...filteredCredentials,
+    encryptCredential(credential),
+  ];
   await setCredentials(newCredentials);
 }
 
