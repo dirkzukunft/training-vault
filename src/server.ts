@@ -7,22 +7,17 @@ import {
   updateCredential,
 } from './credentials';
 import { Credential } from './types';
+import { getAndCheckMasterPassword } from './uitls/auth';
 import { validateMasterPassword } from './uitls/validation';
 const port = 3000;
 const app = express();
 app.use(express.json());
 
 app.get('/api/credentials/:service', async (req, res) => {
-  const masterPassword = req.headers.authorization;
-  if (!masterPassword) {
-    res.status(400).send('Authorization header missing');
-    return;
-  } else if (!(await validateMasterPassword(masterPassword))) {
-    res.status(401).send('Unauthorized request');
-    return;
-  }
-
   const { service } = req.params;
+  const masterPassword = await getAndCheckMasterPassword(req, res);
+  if (!masterPassword) return;
+
   try {
     const credential = await getCredential(service, masterPassword);
     res.status(200).json(credential);
@@ -33,14 +28,8 @@ app.get('/api/credentials/:service', async (req, res) => {
 });
 
 app.get('/api/credentials/', async (req, res) => {
-  const masterPassword = req.headers.authorization;
-  if (!masterPassword) {
-    res.status(400).send('Authorization header missing');
-    return;
-  } else if (!(await validateMasterPassword(masterPassword))) {
-    res.status(401).send('Unauthorized request');
-    return;
-  }
+  const masterPassword = await getAndCheckMasterPassword(req, res);
+  if (!masterPassword) return;
 
   try {
     const credentials = await getAllCredentials(masterPassword);
@@ -52,14 +41,8 @@ app.get('/api/credentials/', async (req, res) => {
 });
 
 app.post('/api/credentials/', async (req, res) => {
-  const masterPassword = req.headers.authorization;
-  if (!masterPassword) {
-    res.status(400).send('Authorization header missing');
-    return;
-  } else if (!(await validateMasterPassword(masterPassword))) {
-    res.status(401).send('Unauthorized request');
-    return;
-  }
+  const masterPassword = await getAndCheckMasterPassword(req, res);
+  if (!masterPassword) return;
 
   try {
     const credential: Credential = req.body;
@@ -72,15 +55,10 @@ app.post('/api/credentials/', async (req, res) => {
 });
 
 app.delete('/api/credentials/:service', async (req, res) => {
-  const masterPassword = req.headers.authorization;
-  if (!masterPassword) {
-    res.status(400).send('Authorization header missing');
-    return;
-  } else if (!(await validateMasterPassword(masterPassword))) {
-    res.status(401).send('Unauthorized request');
-    return;
-  }
   const { service } = req.params;
+  const masterPassword = await getAndCheckMasterPassword(req, res);
+  if (!masterPassword) return;
+
   try {
     await deleteCredential(service);
     res.status(200).send('');
@@ -91,14 +69,8 @@ app.delete('/api/credentials/:service', async (req, res) => {
 });
 
 app.put('/api/credentials/:service', async (req, res) => {
-  const masterPassword = req.headers.authorization;
-  if (!masterPassword) {
-    res.status(400).send('Authorization header missing');
-    return;
-  } else if (!(await validateMasterPassword(masterPassword))) {
-    res.status(401).send('Unauthorized request');
-    return;
-  }
+  const masterPassword = await getAndCheckMasterPassword(req, res);
+  if (!masterPassword) return;
 
   const { service } = req.params;
   const credential: Credential = req.body;
