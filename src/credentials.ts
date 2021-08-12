@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
-import { encryptCredential, decryptCredential } from './uitls/crypto';
+import { encryptCredential, decryptCredential } from './utils/crypto';
 import { DB, Credential } from './types';
 
 async function readCredentials(): Promise<Credential[]> {

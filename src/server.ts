@@ -7,8 +7,8 @@ import {
   updateCredential,
 } from './credentials';
 import { Credential } from './types';
-import { getAndCheckMasterPassword } from './uitls/auth';
-import { validateMasterPassword } from './uitls/validation';
+import { getAndCheckMasterPassword } from './utils/auth';
+import { validateMasterPassword } from './utils/validation';
 const port = 3000;
 const app = express();
 app.use(express.json());
