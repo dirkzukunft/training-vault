@@ -2,18 +2,23 @@
   "credentials": [
     {
       "service": "google",
-      "username": "googleman",
-      "password": "aaa123"
-    },
-    {
-      "service": "twitter",
-      "username": "twitterman",
-      "password": "aaa123"
+      "username": "googleMan",
+      "password": "U2FsdGVkX1/zPBFBRApXtIUsT/ndxOw+CHE8nRguqKg="
     },
     {
       "service": "facebook",
-      "username": "faceman",
-      "password": "aaa123"
+      "username": "faceMan",
+      "password": "U2FsdGVkX19JdvtdL4JN+vYesxdtzDiRtiPBfFbw+l0="
+    },
+    {
+      "service": "twitter",
+      "username": "Vogel",
+      "password": "U2FsdGVkX1+zKIbLLeEjWRi0rJPV02lM"
+    },
+    {
+      "service": "deleteme",
+      "username": "neu",
+      "password": "U2FsdGVkX1+JtV9zLrRSRjdAY5wP2YBy"
     }
   ]
 }
