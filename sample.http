@@ -1,14 +1,14 @@
 ### All credentials
 GET http://localhost:3000/api/credentials/
-Authorization: mykey
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Valid credential request
 GET http://localhost:3000/api/credentials/google
-Authorization: mykey
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Invalid credential request
 GET http://localhost:3000/api/credentials/xyz
-Authorization: mykey
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Invalid credential request
 GET http://localhost:3000/api/credentials/google
@@ -17,7 +17,7 @@ Authorization: wrongKey
 ### Add a new credential
 POST http://localhost:3000/api/credentials/
 Content-Type: application/json
-Authorization: mykey
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 {
     "service": "deleteme",
@@ -27,12 +27,12 @@ Authorization: mykey
 
 ###
 DELETE http://localhost:3000/api/credentials/deleteme
-Authorization: mykey
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Add a new credential
 PUT http://localhost:3000/api/credentials/deleteme
 Content-Type: application/json
-Authorization: mykey
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 {
     "service": "deleteme",
