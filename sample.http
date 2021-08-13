@@ -21,8 +21,8 @@ Authorization: {{$dotenv MASTERPASSWORD}}
 
 {
     "service": "deleteme",
-    "username": "bullshit",
-    "password": "nothing"
+    "username": "Eraser",
+    "password": "oldPw"
 }
 
 ###

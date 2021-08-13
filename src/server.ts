@@ -1,14 +1,10 @@
 import express from 'express';
-import {
-  addCredential,
-  deleteCredential,
-  getAllCredentials,
-  getCredential,
-  updateCredential,
-} from './credentials';
+import { addCredential, getAllCredentials, getCredential } from './utils/db';
+import { deleteCredential, updateCredential } from './credentials';
 import { Credential } from './types';
 import { getAndCheckMasterPassword } from './utils/auth';
-import { validateMasterPassword } from './utils/validation';
+import { connectDb } from './utils/db';
+
 const port = 3000;
 const app = express();
 app.use(express.json());
@@ -87,8 +83,13 @@ app.get('/', (_req, res) => {
   res.send('Hello');
 });
 
-app.listen(port, () => {
-  console.log();
-  validateMasterPassword('mykey');
-  console.log(`Listening at http://localhost:${port}`);
-});
+connectDb().then(
+  () => {
+    app.listen(port, async () => {
+      console.log(
+        `Connected to database and listening at http://localhost:${port}`
+      );
+    });
+  },
+  (error) => console.error(error)
+);
