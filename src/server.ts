@@ -1,6 +1,10 @@
 import express from 'express';
-import { addCredential, getAllCredentials, getCredential } from './utils/db';
-import { deleteCredential, updateCredential } from './credentials';
+import {
+  addOrUpdateCredential,
+  getAllCredentials,
+  getCredential,
+  deleteCredential,
+} from './utils/db';
 import { Credential } from './types';
 import { getAndCheckMasterPassword } from './utils/auth';
 import { connectDb } from './utils/db';
@@ -42,7 +46,7 @@ app.post('/api/credentials/', async (req, res) => {
 
   try {
     const credential: Credential = req.body;
-    await addCredential(credential, masterPassword);
+    await addOrUpdateCredential(credential, masterPassword);
     res.status(200).json(credential);
   } catch (error) {
     res.status(500).send('Could not add credentials');
@@ -71,7 +75,7 @@ app.put('/api/credentials/:service', async (req, res) => {
   const { service } = req.params;
   const credential: Credential = req.body;
   try {
-    await updateCredential(service, credential, masterPassword);
+    await addOrUpdateCredential(credential, masterPassword);
     res.status(200).json(credential);
   } catch (error) {
     res.status(500).send(`Could not update credential ${service}`);

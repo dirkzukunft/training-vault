@@ -39,3 +39,24 @@ Authorization: {{$dotenv MASTERPASSWORD}}
     "username": "neu",
     "password": "neuesPw"
 }
+
+### Add basis of DB
+POST http://localhost:3000/api/credentials/
+Content-Type: application/json
+Authorization: {{$dotenv MASTERPASSWORD}}
+
+  {
+    "service": "google",
+    "username": "g00gle",
+    "password": "strongPW"
+  },
+  {
+    "service": "facebook",
+    "username": "f4ceb00k",
+    "password": "smile"
+  },
+  {
+    "service": "twitter",
+    "username": "vogel",
+    "password": "peeeep"
+  },

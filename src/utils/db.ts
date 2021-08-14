@@ -20,12 +20,16 @@ export async function connectDb(): Promise<void> {
   }
 }
 
-export async function addCredential(
+export async function addOrUpdateCredential(
   credential: Credential,
   key: string
 ): Promise<void> {
   const encryptedCredential = encryptCredential(credential, key);
-  await collection.insertOne(encryptedCredential);
+  await collection.updateMany(
+    { service: credential.service },
+    { $set: encryptedCredential },
+    { upsert: true }
+  );
 }
 
 export async function getAllCredentials(key: string): Promise<Credential[]> {
@@ -52,4 +56,8 @@ export async function getCredential(
   const credential = { service: '', username: '', password: '', ...result };
 
   return decryptCredential(credential, key);
+}
+
+export async function deleteCredential(service: string): Promise<void> {
+  await collection.deleteMany({ service: service });
 }
