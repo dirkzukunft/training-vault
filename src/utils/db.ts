@@ -47,14 +47,13 @@ export async function getCredential(
   service: string,
   key: string
 ): Promise<Credential> {
-  const result = await collection.findOne({
+  const credential = await collection.findOne({
     service: service,
   });
-  if (!result) throw new Error(`No credential found for service ${service}`);
+  if (!credential)
+    throw new Error(`No credential found for service ${service}`);
 
-  // delete result._id;
-
-  return decryptCredential(result, key);
+  return decryptCredential(credential, key);
 }
 
 export async function deleteCredential(service: string): Promise<void> {
