@@ -5,19 +5,23 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 let client: MongoClient;
-let collection: Collection<Credential>;
-const dbName = 'vault';
-const collectionName = 'credentials';
 
 export async function connectDb(): Promise<void> {
   if (!process.env.DB_URI) throw new Error('No DB_URI in the .env found');
   client = new MongoClient(process.env.DB_URI);
   try {
     await client.connect();
-    collection = client.db(dbName).collection(collectionName);
   } catch (error) {
     throw new Error(`Database connection failed: ${error}`);
   }
+}
+
+export function getCollection<T>(collectionName: string): Collection<T> {
+  return client.db().collection<T>(collectionName);
+}
+
+export function getCredentialCollection(): Collection<Credential> {
+  return getCollection<Credential>('credentials');
 }
 
 export async function addOrUpdateCredential(
@@ -25,7 +29,7 @@ export async function addOrUpdateCredential(
   key: string
 ): Promise<void> {
   const encryptedCredential = encryptCredential(credential, key);
-  await collection.updateMany(
+  await getCredentialCollection().updateMany(
     { service: credential.service },
     { $set: encryptedCredential },
     { upsert: true }
@@ -33,7 +37,7 @@ export async function addOrUpdateCredential(
 }
 
 export async function getAllCredentials(key: string): Promise<Credential[]> {
-  const credentials: Credential[] = await collection
+  const credentials: Credential[] = await getCredentialCollection()
     .find({}, { projection: { _id: 0 } })
     .toArray();
   const decryptedCredentials = credentials.map((credential) =>
@@ -46,7 +50,7 @@ export async function getCredential(
   service: string,
   key: string
 ): Promise<Credential> {
-  const credential = await collection.findOne(
+  const credential = await getCredentialCollection().findOne(
     {
       service: service,
     },
@@ -59,5 +63,5 @@ export async function getCredential(
 }
 
 export async function deleteCredential(service: string): Promise<void> {
-  await collection.deleteMany({ service: service });
+  await getCredentialCollection().deleteMany({ service: service });
 }
