@@ -45,6 +45,7 @@ POST http://localhost:3000/api/credentials/
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
+[
   {
     "service": "google",
     "username": "g00gle",
@@ -59,4 +60,5 @@ Authorization: {{$dotenv MASTERPASSWORD}}
     "service": "twitter",
     "username": "vogel",
     "password": "peeeep"
-  },
+  }
+]
