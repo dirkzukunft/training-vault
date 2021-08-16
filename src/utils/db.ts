@@ -34,8 +34,7 @@ export async function addOrUpdateCredential(
 
 export async function getAllCredentials(key: string): Promise<Credential[]> {
   const credentials: Credential[] = await collection
-    .find()
-    .project({ _id: 0 })
+    .find({}, { projection: { _id: 0 } })
     .toArray();
   const decryptedCredentials = credentials.map((credential) =>
     decryptCredential(credential, key)
@@ -47,9 +46,12 @@ export async function getCredential(
   service: string,
   key: string
 ): Promise<Credential> {
-  const credential = await collection.findOne({
-    service: service,
-  });
+  const credential = await collection.findOne(
+    {
+      service: service,
+    },
+    { projection: { _id: 0 } }
+  );
   if (!credential)
     throw new Error(`No credential found for service ${service}`);
 
