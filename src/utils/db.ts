@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 let client: MongoClient;
-let collection: Collection;
+let collection: Collection<Credential>;
 const dbName = 'vault';
 const collectionName = 'credentials';
 
@@ -52,10 +52,9 @@ export async function getCredential(
   });
   if (!result) throw new Error(`No credential found for service ${service}`);
 
-  delete result._id;
-  const credential = { service: '', username: '', password: '', ...result };
+  // delete result._id;
 
-  return decryptCredential(credential, key);
+  return decryptCredential(result, key);
 }
 
 export async function deleteCredential(service: string): Promise<void> {
