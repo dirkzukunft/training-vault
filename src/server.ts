@@ -8,8 +8,10 @@ import {
 import { Credential } from './types';
 import { getAndCheckMasterPassword } from './utils/auth';
 import { connectDb } from './credentials';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const port = 3000;
+const port = process.env.EXPRESS_PORT || 3001;
 const app = express();
 app.use(express.json());
 
