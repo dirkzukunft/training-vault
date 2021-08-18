@@ -1,19 +1,45 @@
-import { readFile, writeFile } from 'fs/promises';
+import { Collection, MongoClient } from 'mongodb';
 import { encryptCredential, decryptCredential } from './utils/crypto';
-import { DB, Credential } from './types';
+import { Credential } from './types';
+import dotenv from 'dotenv';
+dotenv.config();
 
-async function readCredentials(): Promise<Credential[]> {
+let client: MongoClient;
+
+export async function connectDb(): Promise<void> {
+  if (!process.env.DB_URI) throw new Error('No DB_URI in the .env found');
+  client = new MongoClient(process.env.DB_URI);
   try {
-    const dbData = await readFile('./src/db.json', 'utf-8');
-    const db: DB = JSON.parse(dbData);
-    return db.credentials;
+    await client.connect();
   } catch (error) {
-    throw new Error('Could not load credentials from database');
+    throw new Error(`Database connection failed: ${error}`);
   }
 }
 
+export function getCollection<T>(collectionName: string): Collection<T> {
+  return client.db().collection<T>(collectionName);
+}
+
+export function getCredentialCollection(): Collection<Credential> {
+  return getCollection<Credential>('credentials');
+}
+
+export async function addOrUpdateCredential(
+  credential: Credential,
+  key: string
+): Promise<void> {
+  const encryptedCredential = encryptCredential(credential, key);
+  await getCredentialCollection().updateMany(
+    { service: credential.service },
+    { $set: encryptedCredential },
+    { upsert: true }
+  );
+}
+
 export async function getAllCredentials(key: string): Promise<Credential[]> {
-  const credentials = await readCredentials();
+  const credentials: Credential[] = await getCredentialCollection()
+    .find({}, { projection: { _id: 0 } })
+    .toArray();
   const decryptedCredentials = credentials.map((credential) =>
     decryptCredential(credential, key)
   );
@@ -24,52 +50,18 @@ export async function getCredential(
   service: string,
   key: string
 ): Promise<Credential> {
-  const credentials = await readCredentials();
-
-  const credential = credentials.find(
-    (credential) => credential.service === service
+  const credential = await getCredentialCollection().findOne(
+    {
+      service: service,
+    },
+    { projection: { _id: 0 } }
   );
-
   if (!credential)
     throw new Error(`No credential found for service ${service}`);
 
   return decryptCredential(credential, key);
 }
 
-export async function addCredential(
-  credential: Credential,
-  key: string
-): Promise<void> {
-  const credentials = await readCredentials();
-  const newCredentials = [...credentials, encryptCredential(credential, key)];
-  await setCredentials(newCredentials);
-}
-
 export async function deleteCredential(service: string): Promise<void> {
-  const credentials = await readCredentials();
-  const filteredCredentials = credentials.filter(
-    (credential) => credential.service !== service
-  );
-  await setCredentials(filteredCredentials);
-}
-
-export async function updateCredential(
-  service: string,
-  credential: Credential,
-  key: string
-): Promise<void> {
-  const credentials = await readCredentials();
-  const filteredCredentials = credentials.filter(
-    (credential) => credential.service !== service
-  );
-  const newCredentials = [
-    ...filteredCredentials,
-    encryptCredential(credential, key),
-  ];
-  await setCredentials(newCredentials);
-}
-
-async function setCredentials(credentials: Credential[]) {
-  const newDB: DB = { credentials: credentials };
-  await writeFile('./src/db.json', JSON.stringify(newDB, null, 2));
+  await getCredentialCollection().deleteMany({ service: service });
 }

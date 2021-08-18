@@ -4,10 +4,10 @@ import {
   getAllCredentials,
   getCredential,
   deleteCredential,
-} from './utils/db';
+} from './credentials';
 import { Credential } from './types';
 import { getAndCheckMasterPassword } from './utils/auth';
-import { connectDb } from './utils/db';
+import { connectDb } from './credentials';
 
 const port = 3000;
 const app = express();
