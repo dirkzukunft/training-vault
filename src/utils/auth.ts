@@ -1,8 +1,9 @@
 import { validateMasterPassword } from './validation';
+import { Request, Response } from 'express';
 
 export async function getAndCheckMasterPassword(
-  req: any,
-  res: any
+  req: Request,
+  res: Response
 ): Promise<string> {
   const masterPassword = req.headers.authorization;
   if (!masterPassword) {

@@ -1,14 +1,14 @@
 import express from 'express';
 import {
-  addCredential,
-  deleteCredential,
+  addOrUpdateCredential,
   getAllCredentials,
   getCredential,
-  updateCredential,
+  deleteCredential,
 } from './credentials';
 import { Credential } from './types';
 import { getAndCheckMasterPassword } from './utils/auth';
-import { validateMasterPassword } from './utils/validation';
+import { connectDb } from './credentials';
+
 const port = 3000;
 const app = express();
 app.use(express.json());
@@ -46,7 +46,7 @@ app.post('/api/credentials/', async (req, res) => {
 
   try {
     const credential: Credential = req.body;
-    await addCredential(credential, masterPassword);
+    await addOrUpdateCredential(credential, masterPassword);
     res.status(200).json(credential);
   } catch (error) {
     res.status(500).send('Could not add credentials');
@@ -75,7 +75,7 @@ app.put('/api/credentials/:service', async (req, res) => {
   const { service } = req.params;
   const credential: Credential = req.body;
   try {
-    await updateCredential(service, credential, masterPassword);
+    await addOrUpdateCredential(credential, masterPassword);
     res.status(200).json(credential);
   } catch (error) {
     res.status(500).send(`Could not update credential ${service}`);
@@ -87,8 +87,13 @@ app.get('/', (_req, res) => {
   res.send('Hello');
 });
 
-app.listen(port, () => {
-  console.log();
-  validateMasterPassword('mykey');
-  console.log(`Listening at http://localhost:${port}`);
-});
+connectDb().then(
+  () => {
+    app.listen(port, async () => {
+      console.log(
+        `Connected to database and listening at http://localhost:${port}`
+      );
+    });
+  },
+  (error) => console.error(error)
+);
