@@ -40,25 +40,35 @@ Authorization: {{$dotenv MASTERPASSWORD}}
     "password": "neuesPw"
 }
 
-### Add basis of DB
+### Add basic entry 1
 POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
-[
   {
     "service": "google",
     "username": "g00gle",
     "password": "strongPW"
-  },
+  }
+
+### Add basic entry 2
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
+Content-Type: application/json
+Authorization: {{$dotenv MASTERPASSWORD}}
+
   {
     "service": "facebook",
     "username": "f4ceb00k",
     "password": "smile"
-  },
+  }
+
+### Add basic entry 3
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
+Content-Type: application/json
+Authorization: {{$dotenv MASTERPASSWORD}}
+
   {
     "service": "twitter",
     "username": "vogel",
     "password": "peeeep"
   }
-]
