@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Credential } from '../../types';
+import { Credential } from '../../../types';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard(): JSX.Element {
@@ -12,10 +12,9 @@ export default function Dashboard(): JSX.Element {
         headers: { Authorization: masterPassword },
       });
 
-      let fetchedCredentials = [];
-      if (response.status === 200) {
-        fetchedCredentials = await response.json();
-      }
+      const fetchedCredentials =
+        response.status === 200 ? await response.json() : '';
+
       setCredentials(fetchedCredentials);
     })();
     // fetchCredentials();
