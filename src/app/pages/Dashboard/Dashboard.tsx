@@ -11,13 +11,10 @@ export default function Dashboard(): JSX.Element {
       const response = await fetch('/api/credentials', {
         headers: { Authorization: masterPassword },
       });
-
       const fetchedCredentials =
         response.status === 200 ? await response.json() : '';
-
       setCredentials(fetchedCredentials);
     })();
-    // fetchCredentials();
   }, [masterPassword]);
 
   return (
