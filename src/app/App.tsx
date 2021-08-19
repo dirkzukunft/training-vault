@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import Password from './pages/Password';
 
 function App(): JSX.Element {
   return (
@@ -8,6 +9,9 @@ function App(): JSX.Element {
       <Switch>
         <Route exact path="/">
           <Dashboard />
+        </Route>
+        <Route exact path="/password/:service">
+          <Password />
         </Route>
       </Switch>
     </BrowserRouter>
