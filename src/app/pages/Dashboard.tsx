@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Dashboard.module.css';
 import { Credential } from '../../types';
+import styles from './Dashboard.module.css';
 
 export default function Dashboard(): JSX.Element {
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [masterPassword, setMasterPassword] = useState('');
 
   useEffect(() => {
-    async function fetchCredentials() {
+    (async () => {
       const response = await fetch('/api/credentials', {
         headers: { Authorization: masterPassword },
       });
@@ -17,8 +17,8 @@ export default function Dashboard(): JSX.Element {
         fetchedCredentials = await response.json();
       }
       setCredentials(fetchedCredentials);
-    }
-    fetchCredentials();
+    })();
+    // fetchCredentials();
   }, [masterPassword]);
 
   return (
