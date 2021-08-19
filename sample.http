@@ -1,21 +1,21 @@
 ### All credentials
-GET http://localhost:3000/api/credentials/
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Valid credential request
-GET http://localhost:3000/api/credentials/google
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/google
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Invalid credential request
-GET http://localhost:3000/api/credentials/xyz
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/xyz
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Invalid credential request
-GET http://localhost:3000/api/credentials/google
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/google
 Authorization: wrongKey
 
 ### Add a new credential
-POST http://localhost:3000/api/credentials/
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
@@ -26,11 +26,11 @@ Authorization: {{$dotenv MASTERPASSWORD}}
 }
 
 ###
-DELETE http://localhost:3000/api/credentials/deleteme
+DELETE http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/deleteme
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Add a new credential
-PUT http://localhost:3000/api/credentials/deleteme
+PUT http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/deleteme
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
@@ -41,7 +41,7 @@ Authorization: {{$dotenv MASTERPASSWORD}}
 }
 
 ### Add basis of DB
-POST http://localhost:3000/api/credentials/
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
