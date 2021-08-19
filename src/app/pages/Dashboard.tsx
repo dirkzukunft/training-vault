@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css';
+import { Credential } from '../../types';
 
 export default function Dashboard(): JSX.Element {
+  const [credentials, setCredentials] = useState<Credential[]>([]);
+  const [masterPassword, setMasterPassword] = useState('');
+
+  useEffect(() => {
+    async function fetchCredentials() {
+      const response = await fetch('/api/credentials', {
+        headers: { Authorization: masterPassword },
+      });
+
+      let fetchedCredentials = [];
+      if (response.status === 200) {
+        fetchedCredentials = await response.json();
+      }
+      setCredentials(fetchedCredentials);
+    }
+    fetchCredentials();
+  }, [masterPassword]);
+
   return (
     <div className={styles.dashboard}>
       <h1>Vault</h1>
@@ -10,9 +29,8 @@ export default function Dashboard(): JSX.Element {
         <span className={styles.label}>Master password</span>
         <input
           type="password"
-          id="password"
           className={styles.input}
-          placeholder=""
+          onChange={(event) => setMasterPassword(event.target.value)}
         />
       </label>
 
@@ -21,7 +39,20 @@ export default function Dashboard(): JSX.Element {
         <input type="search" id="search" className={styles.input} />
       </label>
 
-      <div className={styles.result}>No Result</div>
+      <div className={styles.result}>
+        {credentials.length > 0 &&
+          credentials.map((credential) => (
+            <div key={`div-${credential.service}`}>
+              <p key={`service-${credential.service}`}>{credential.service}</p>
+              <p key={`username-${credential.service}`}>
+                {credential.username}
+              </p>
+              <p key={`password-${credential.service}`}>
+                {credential.password}
+              </p>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
