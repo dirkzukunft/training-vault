@@ -12,7 +12,7 @@ function App(): JSX.Element {
     <MasterPasswordContext.Provider
       value={{ masterPassword, setMasterPassword }}
     >
-      <Headline>Vault3</Headline>
+      <Headline>Vault</Headline>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
