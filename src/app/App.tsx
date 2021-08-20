@@ -6,14 +6,14 @@ import { MasterPasswordContext } from './components/MasterPasswordContext/Master
 import Headline from './components/Headline/Headline';
 
 function App(): JSX.Element {
-  const [masterPassword, setMasterPassword] = useState<string>('no pw');
+  const [masterPassword, setMasterPassword] = useState<string>('');
 
   return (
     <MasterPasswordContext.Provider
       value={{ masterPassword, setMasterPassword }}
     >
-      <Headline>Vault</Headline>
       <BrowserRouter>
+        <Headline>Vault</Headline>
         <Switch>
           <Route exact path="/">
             <Dashboard />

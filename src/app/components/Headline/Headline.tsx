@@ -1,4 +1,6 @@
+import { Icon } from '@iconify/react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Headline.module.css';
 
 type HeadlineProps = {
@@ -14,7 +16,15 @@ export default function Headline({
   const CustomHeadline = `h${headlineLevel}` as keyof JSX.IntrinsicElements;
   return (
     <CustomHeadline className={styles[`h${headlineLevel}`]}>
-      {children}
+      <Link to="/">{children}</Link>
+      <div className={styles.links}>
+        <Link to="/search">
+          <Icon icon="mdi-light:magnify" inline={true} />
+        </Link>
+        <Link to="/add">
+          <Icon icon="mdi-light:plus" inline={true} />
+        </Link>
+      </div>
     </CustomHeadline>
   );
 }

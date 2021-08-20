@@ -61,3 +61,14 @@ input:focus {
   border: 1px solid var(--clrBackgroundShadow);
   box-shadow: var(--shadow);
 }
+
+a,
+a:visited {
+  color: var(--clrText);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--clrAccent);
+}
