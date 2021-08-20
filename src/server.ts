@@ -85,8 +85,9 @@ app.put('/api/credentials/:service', async (req, res) => {
   }
 });
 
-app.get('/', (_req, res) => {
-  res.send('Hello');
+app.get('/api/', async (req, res) => {
+  const masterPassword = await getAndCheckMasterPassword(req, res);
+  if (masterPassword) res.status(202).send('');
 });
 
 connectDb().then(

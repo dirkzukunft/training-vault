@@ -1,3 +1,7 @@
+### Check master password
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/
+Authorization: {{$dotenv MASTERPASSWORD}}
+
 ### All credentials
 GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Authorization: {{$dotenv MASTERPASSWORD}}
