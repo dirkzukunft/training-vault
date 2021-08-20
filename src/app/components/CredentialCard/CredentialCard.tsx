@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react';
 import React from 'react';
 import { Credential } from '../../../types';
 import styles from './CredentialCard.module.css';
@@ -12,9 +13,26 @@ export default function CredentialCard({
   const { service, username, password } = credential;
   return (
     <article className={styles.credentiaCard}>
-      <p className={styles.service}>{service}</p>
-      <p className={styles.username}>{username}</p>
-      <p className={styles.password}>{password}</p>
+      <div className={styles.service}>
+        {service}
+        <div className={styles.links}>
+          <Icon
+            icon="mdi-light:pencil"
+            width="1.5rem"
+            height="1.5rem"
+            inline={true}
+          />
+          <Icon
+            icon="mdi-light:delete"
+            width="1.5rem"
+            height="1.5rem"
+            inline={true}
+          />
+        </div>
+      </div>
+
+      <div className={styles.username}>{username}</div>
+      <div className={styles.password}>{password}</div>
     </article>
   );
 }
