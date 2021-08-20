@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Credential } from '../../../types';
+import CredentialCard from '../../components/CredentialCard/CredentialCard';
+import { useMasterPassword } from '../../components/MasterPasswordContext/MasterPasswordContext';
 import styles from './Dashboard.module.css';
-import { useMasterPassword } from '../../components/MasterPasswordContext';
 
 export default function Dashboard(): JSX.Element {
   const { masterPassword, setMasterPassword } = useMasterPassword();
@@ -20,11 +21,9 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <div className={styles.dashboard}>
-      <h1>Vault</h1>
-
       {credentials.length === 0 && (
         <label>
-          <span className={styles.label}>Master password</span>
+          <div className={styles.label}>Master password:</div>
           <input
             type="password"
             className={styles.input}
@@ -36,15 +35,7 @@ export default function Dashboard(): JSX.Element {
       <div className={styles.result}>
         {credentials.length > 0 &&
           credentials.map((credential) => (
-            <div key={`div-${credential.service}`}>
-              <p key={`service-${credential.service}`}>{credential.service}</p>
-              <p key={`username-${credential.service}`}>
-                {credential.username}
-              </p>
-              <p key={`password-${credential.service}`}>
-                {credential.password}
-              </p>
-            </div>
+            <CredentialCard credential={credential} key={credential.service} />
           ))}
       </div>
     </div>
