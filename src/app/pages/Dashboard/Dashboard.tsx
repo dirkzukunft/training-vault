@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Credential } from '../../../types';
 import styles from './Dashboard.module.css';
+import { useMasterPassword } from '../../components/MasterPasswordContext';
 
 export default function Dashboard(): JSX.Element {
+  const { masterPassword, setMasterPassword } = useMasterPassword();
   const [credentials, setCredentials] = useState<Credential[]>([]);
-  const [masterPassword, setMasterPassword] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -21,19 +22,16 @@ export default function Dashboard(): JSX.Element {
     <div className={styles.dashboard}>
       <h1>Vault</h1>
 
-      <label>
-        <span className={styles.label}>Master password</span>
-        <input
-          type="password"
-          className={styles.input}
-          onChange={(event) => setMasterPassword(event.target.value)}
-        />
-      </label>
-
-      <label>
-        <span className={styles.label}>Search for</span>
-        <input type="search" id="search" className={styles.input} />
-      </label>
+      {credentials.length === 0 && (
+        <label>
+          <span className={styles.label}>Master password</span>
+          <input
+            type="password"
+            className={styles.input}
+            onChange={(event) => setMasterPassword(event.target.value)}
+          />
+        </label>
+      )}
 
       <div className={styles.result}>
         {credentials.length > 0 &&
