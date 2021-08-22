@@ -42,7 +42,7 @@ export default function CredentialCard({
       body: JSON.stringify(newCredential),
     });
 
-    if (response.status === 200) {
+    if (response.ok) {
       setcurrentCredential(newCredential);
       if (mode === 'edit') setMode('view');
       if (mode === 'add') setMode('added');

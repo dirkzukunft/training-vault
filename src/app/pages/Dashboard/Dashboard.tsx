@@ -15,8 +15,7 @@ export default function Dashboard(): JSX.Element {
         const response = await fetch('/api/credentials', {
           headers: { Authorization: masterPassword },
         });
-        const fetchedCredentials =
-          response.status === 200 ? await response.json() : '';
+        const fetchedCredentials = response.ok ? await response.json() : '';
         setCredentials(fetchedCredentials);
         setLoading(false);
       })();

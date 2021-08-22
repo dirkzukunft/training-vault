@@ -15,8 +15,7 @@ export default function SearchCredential(): JSX.Element {
         const response = await fetch(`/api/credentials/${search}`, {
           headers: { Authorization: masterPassword },
         });
-        const fetchedCredential =
-          response.status === 200 ? await response.json() : '';
+        const fetchedCredential = response.ok ? await response.json() : '';
         setCredential(fetchedCredential);
       })();
     }

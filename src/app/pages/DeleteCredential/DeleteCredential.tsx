@@ -15,7 +15,7 @@ export default function DeleteCredential(): JSX.Element {
       },
     });
 
-    if (response.status === 200) {
+    if (response.ok) {
       setStatus(`${service} deleted.`);
     } else {
       setStatus(`ERROR - ${service} could not be deleted.`);
