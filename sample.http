@@ -33,7 +33,7 @@ Authorization: {{$dotenv MASTERPASSWORD}}
 DELETE http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/deleteme
 Authorization: {{$dotenv MASTERPASSWORD}}
 
-### Add a new credential
+### Change a new credential
 PUT http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/deleteme
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
