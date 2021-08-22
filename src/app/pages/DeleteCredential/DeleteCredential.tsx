@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useMasterPassword } from '../../components/MasterPasswordContext/MasterPasswordContext';
 
 export default function DeleteCredential(): JSX.Element {
   const { service } = useParams<{ service: string }>();
+  const { masterPassword } = useMasterPassword();
+  const [status, setStatus] = useState<string>(`processing...`);
 
-  return <>DeleteCredential {service}</>;
+  async function deleteCredential() {
+    const response = await fetch(`/api/credentials/${service}`, {
+      method: `DELETE`,
+      headers: {
+        Authorization: masterPassword,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      setStatus(`${service} deleted.`);
+    } else {
+      setStatus(`ERROR - ${service} could not be deleted.`);
+    }
+  }
+
+  deleteCredential();
+  return <>{status}</>;
 }
