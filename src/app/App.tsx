@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { deleteCredential } from '../credentials';
 import Headline from './components/Headline/Headline';
 import { MasterPasswordContext } from './components/MasterPasswordContext/MasterPasswordContext';
 import AddCredential from './pages/AddCredential/AddCredential';
