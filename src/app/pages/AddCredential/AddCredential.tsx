@@ -4,8 +4,8 @@ import CredentialCard from '../../components/CredentialCard/CredentialCard';
 export default function AddCredential(): JSX.Element {
   return (
     <CredentialCard
-      addMode
-      credential={{ service: 'dd', username: '', password: '' }}
+      type="add"
+      credential={{ service: '', username: '', password: '' }}
     />
   );
 }
