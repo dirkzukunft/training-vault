@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Password from './pages/Password/Password';
-import { MasterPasswordContext } from './components/MasterPasswordContext/MasterPasswordContext';
 import Headline from './components/Headline/Headline';
+import { MasterPasswordContext } from './components/MasterPasswordContext/MasterPasswordContext';
+import Dashboard from './pages/Dashboard/Dashboard';
+import SearchCredential from './pages/SearchCredential/SearchCredential';
 
 function App(): JSX.Element {
   const [masterPassword, setMasterPassword] = useState<string>('');
@@ -15,11 +15,11 @@ function App(): JSX.Element {
       <BrowserRouter>
         <Headline>Vault</Headline>
         <Switch>
-          <Route exact path="/">
-            <Dashboard />
+          <Route path="/search">
+            <SearchCredential />
           </Route>
-          <Route exact path="/password/:service">
-            <Password />
+          <Route path="/">
+            <Dashboard />
           </Route>
         </Switch>
       </BrowserRouter>
