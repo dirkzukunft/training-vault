@@ -22,7 +22,6 @@ export default function Dashboard(): JSX.Element {
       })();
     } else {
       setLoading(false);
-      console.log(loading);
     }
   }, [masterPassword]);
 
