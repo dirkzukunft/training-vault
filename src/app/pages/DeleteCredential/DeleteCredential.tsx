@@ -12,7 +12,6 @@ export default function DeleteCredential(): JSX.Element {
       method: `DELETE`,
       headers: {
         Authorization: masterPassword,
-        'Content-Type': 'application/json',
       },
     });
 
