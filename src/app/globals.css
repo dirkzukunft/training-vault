@@ -53,8 +53,7 @@ body {
   min-height: 100vh;
 }
 
-input,
-input:focus {
+input {
   background: #457b9d;
   outline: none;
   color: var(--clrText);
@@ -64,8 +63,16 @@ input:focus {
   padding: 0.2em;
 }
 
+input:focus {
+  outline: none;
+}
+
 input::placeholder {
   color: var(--clrDecent);
+}
+
+input[type='submit'] {
+  cursor: pointer;
 }
 
 a,
