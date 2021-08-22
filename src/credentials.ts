@@ -29,6 +29,7 @@ export async function addOrUpdateCredential(
   key: string
 ): Promise<void> {
   const encryptedCredential = encryptCredential(credential, key);
+  if (!credential.service) throw Error('Service is empty!');
   await getCredentialCollection().updateMany(
     { service: credential.service },
     { $set: encryptedCredential },
