@@ -23,7 +23,7 @@ export default function CredentialCard({
             height="1.5rem"
             inline={true}
           />
-          <Link to={`/search/${service}`}>
+          <Link to={`/delete/${service}`}>
             <Icon
               icon="mdi-light:delete"
               width="1.5rem"
