@@ -60,6 +60,12 @@ input:focus {
   color: var(--clrText);
   border: 1px solid var(--clrBackgroundShadow);
   box-shadow: var(--shadow);
+  width: min(100%, 20ch);
+  padding: 0.2em;
+}
+
+input::placeholder {
+  color: var(--clrDecent);
 }
 
 a,
