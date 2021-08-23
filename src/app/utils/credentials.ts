@@ -19,3 +19,16 @@ export async function updateCredential(
   });
   return response.ok;
 }
+
+export async function deleteCredential(
+  service: string,
+  masterPassword: string
+): Promise<boolean> {
+  const response = await fetch(`/api/credentials/${service}`, {
+    method: `DELETE`,
+    headers: {
+      Authorization: masterPassword,
+    },
+  });
+  return response.ok;
+}
