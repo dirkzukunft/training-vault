@@ -1,56 +1,24 @@
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Credential } from '../../../types';
-import { useMasterPassword } from '../MasterPasswordContext/MasterPasswordContext';
 import styles from './CredentialCard.module.css';
 
 type credentialCardProps = {
   credential: Credential;
   type?: string;
+  onSaveClick: (credential: Credential) => Promise<boolean>;
 };
 
 export default function CredentialCard({
   credential,
   type = 'view',
+  onSaveClick,
 }: credentialCardProps): JSX.Element {
-  const history = useHistory();
-  const { masterPassword } = useMasterPassword();
   const [mode, setMode] = useState<string>(type);
-  const [currentCredential, setcurrentCredential] =
-    useState<Credential>(credential);
-  const { service, username, password } = currentCredential;
-  const [changedService, setChangedService] = useState<string>(service);
-  const [changedUsername, setChangedUsername] = useState<string>(username);
-  const [changedPassword, setChangedPassword] = useState<string>(password);
-
-  async function saveCredential(event: React.FormEvent<HTMLInputElement>) {
-    event.preventDefault();
-    const newCredential: Credential = {
-      service: changedService,
-      username: changedUsername,
-      password: changedPassword,
-    };
-    const apiURL =
-      mode === 'edit' ? `/api/credentials/${service}` : `/api/credentials/`;
-    const apiMethod = mode === 'edit' ? `PUT` : `POST`;
-    const response = await fetch(apiURL, {
-      method: apiMethod,
-      headers: {
-        Authorization: masterPassword,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newCredential),
-    });
-
-    if (response.ok) {
-      setcurrentCredential(newCredential);
-      if (mode === 'edit') setMode('view');
-      if (mode === 'add') history.push('/');
-    } else {
-      setMode('error');
-    }
-  }
+  const [service, setService] = useState<string>(credential.service);
+  const [username, setUsername] = useState<string>(credential.username);
+  const [password, setPassword] = useState<string>(credential.password);
 
   return (
     <form>
@@ -61,8 +29,8 @@ export default function CredentialCard({
             <input
               className={styles.inputService}
               placeholder="Service name"
-              value={changedService}
-              onChange={(event) => setChangedService(event.target.value)}
+              value={service}
+              onChange={(event) => setService(event.target.value)}
             />
           )}
           <div className={styles.links}>
@@ -93,8 +61,8 @@ export default function CredentialCard({
           {(mode === 'edit' || mode === 'add') && (
             <input
               placeholder="Username"
-              value={changedUsername}
-              onChange={(event) => setChangedUsername(event.target.value)}
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
               className={styles.inputUsername}
             />
           )}
@@ -104,8 +72,8 @@ export default function CredentialCard({
           {(mode === 'edit' || mode === 'add') && (
             <input
               placeholder="Password"
-              value={changedPassword}
-              onChange={(event) => setChangedPassword(event.target.value)}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
               className={styles.inputPassword}
             />
           )}
@@ -113,7 +81,14 @@ export default function CredentialCard({
             <input
               type="submit"
               value="Save"
-              onClick={saveCredential}
+              onClick={async (event) => {
+                event.preventDefault();
+                if (await onSaveClick({ service, username, password })) {
+                  if (mode === 'edit') setMode('view');
+                } else {
+                  alert('ERROR');
+                }
+              }}
               className={styles.inputSubmit}
             />
           )}
