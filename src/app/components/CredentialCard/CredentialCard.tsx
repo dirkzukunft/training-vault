@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Credential } from '../../../types';
 import { useMasterPassword } from '../MasterPasswordContext/MasterPasswordContext';
 import styles from './CredentialCard.module.css';
@@ -14,6 +14,7 @@ export default function CredentialCard({
   credential,
   type = 'view',
 }: credentialCardProps): JSX.Element {
+  const history = useHistory();
   const { masterPassword } = useMasterPassword();
   const [mode, setMode] = useState<string>(type);
   const [currentCredential, setcurrentCredential] =
@@ -45,7 +46,7 @@ export default function CredentialCard({
     if (response.ok) {
       setcurrentCredential(newCredential);
       if (mode === 'edit') setMode('view');
-      if (mode === 'add') setMode('added');
+      if (mode === 'add') history.push('/');
     } else {
       setMode('error');
     }
@@ -118,7 +119,6 @@ export default function CredentialCard({
           )}
         </div>
       </article>
-      {mode === 'added' && <Redirect to="/" />}
       {mode === 'error' && `Update ERROR!`}
     </form>
   );
