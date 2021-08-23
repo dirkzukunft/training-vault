@@ -6,7 +6,7 @@ import styles from './SearchCredential.module.css';
 
 export default function SearchCredential(): JSX.Element {
   const { masterPassword } = useMasterPassword();
-  const [credential, setCredential] = useState<Credential>();
+  const [credential, setCredential] = useState<Credential | undefined>();
   const [search, setSearch] = useState<string>();
 
   useEffect(() => {
@@ -15,7 +15,9 @@ export default function SearchCredential(): JSX.Element {
         const response = await fetch(`/api/credentials/${search}`, {
           headers: { Authorization: masterPassword },
         });
-        const fetchedCredential = response.ok ? await response.json() : '';
+        const fetchedCredential = response.ok
+          ? await response.json()
+          : undefined;
         setCredential(fetchedCredential);
       })();
     }
