@@ -6,16 +6,16 @@ import styles from './CredentialCard.module.css';
 
 type credentialCardProps = {
   credential: Credential;
-  type?: string;
+  startMode?: string;
   onSaveClick: (credential: Credential) => Promise<boolean>;
 };
 
 export default function CredentialCard({
   credential,
-  type = 'view',
+  startMode = 'view',
   onSaveClick,
 }: credentialCardProps): JSX.Element {
-  const [mode, setMode] = useState<string>(type);
+  const [mode, setMode] = useState<string>(startMode);
   const [service, setService] = useState<string>(credential.service);
   const [username, setUsername] = useState<string>(credential.username);
   const [password, setPassword] = useState<string>(credential.password);

@@ -1,6 +1,6 @@
 import { Credential } from '../../types';
 
-export async function changeCredential(
+export async function updateCredential(
   credential: Credential,
   masterPassword: string,
   updateMode: boolean
