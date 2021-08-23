@@ -20,8 +20,19 @@ export default function CredentialCard({
   const [username, setUsername] = useState<string>(credential.username);
   const [password, setPassword] = useState<string>(credential.password);
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    {
+      event.preventDefault();
+      if (await onSaveClick({ service, username, password })) {
+        if (mode === 'edit') setMode('view');
+      } else {
+        alert('ERROR');
+      }
+    }
+  }
+
   return (
-    <form>
+    <form onSubmit={(event) => handleSubmit(event)}>
       <article className={styles.credentiaCard}>
         <div className={styles.service}>
           {mode !== 'add' && service}
@@ -78,19 +89,7 @@ export default function CredentialCard({
             />
           )}
           {(mode === 'edit' || mode === 'add') && (
-            <input
-              type="submit"
-              value="Save"
-              onClick={async (event) => {
-                event.preventDefault();
-                if (await onSaveClick({ service, username, password })) {
-                  if (mode === 'edit') setMode('view');
-                } else {
-                  alert('ERROR');
-                }
-              }}
-              className={styles.inputSubmit}
-            />
+            <input type="submit" value="Save" className={styles.inputSubmit} />
           )}
         </div>
       </article>
