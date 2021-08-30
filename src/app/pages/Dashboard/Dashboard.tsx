@@ -3,7 +3,7 @@ import { Credential } from '../../../types';
 import CredentialCard from '../../components/CredentialCard/CredentialCard';
 import { useMasterPassword } from '../../components/MasterPasswordContext/MasterPasswordContext';
 import styles from './Dashboard.module.css';
-import { updateCredential as updateCredential } from '../../utils/credentials';
+import { addOrUpdateCredential as addOrUpdateCredential } from '../../utils/credentials';
 
 export default function Dashboard(): JSX.Element {
   const { masterPassword, setMasterPassword } = useMasterPassword();
@@ -11,7 +11,7 @@ export default function Dashboard(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
 
   async function handleSaveClick(credential: Credential): Promise<boolean> {
-    return await updateCredential(credential, masterPassword, true);
+    return await addOrUpdateCredential(credential, masterPassword, true);
   }
 
   useEffect(() => {
