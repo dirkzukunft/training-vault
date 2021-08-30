@@ -7,17 +7,74 @@
   font-family: 'AllerLight', sans-serif;
 }
 
+:root {
+  --clrText: #f1faee;
+  --clrAccent: #e63946;
+  --clrDecent: #a8dadc;
+  --clrBackgroundLight: linear-gradient(
+    170deg,
+    hsl(203, 39%, 44%) 0%,
+    hsl(203, 39%, 29%) 100%
+  );
+  --background: linear-gradient(
+      170deg,
+      rgba(32, 71, 96, 75%) 0%,
+      rgba(25, 57, 77, 95%) 100%
+    ),
+    url('../assets/vault.webp');
+  --clrBackground: rgba(25, 57, 77, 95%);
+  --clrBackgroundShadow: hsl(203, 50%, 18%);
+  --shadow: 0.1rem 0.1rem 0.3rem var(--clrBackgroundShadow);
+}
 @font-face {
   font-family: 'AllerLight';
   src: url('../assets/aller.light.ttf');
+}
+html {
+  background-color: var(--clrBackground);
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--background);
+  background-size: cover;
+  background-repeat: repeat-x;
+  color: var(--clrText);
+  padding: 5vw;
+  width: max(320px, 100%);
+  min-height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input {
+  background: #457b9d;
+  outline: none;
+  color: var(--clrText);
+  border: 1px solid var(--clrBackgroundShadow);
+  box-shadow: var(--shadow);
+  width: min(100%, 20ch);
+  padding: 0.2em;
+}
+
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--clrDecent);
+}
+
+input[type='submit'] {
+  cursor: pointer;
+}
+
+a,
+a:visited {
+  color: var(--clrText);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--clrAccent);
 }

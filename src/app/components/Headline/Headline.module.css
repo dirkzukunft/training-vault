@@ -1,0 +1,11 @@
+.h1 {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.h1 svg {
+  margin-left: 0.5em;
+  cursor: pointer;
+}

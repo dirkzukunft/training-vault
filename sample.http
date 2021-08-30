@@ -1,21 +1,25 @@
+### Check master password
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/
+Authorization: {{$dotenv MASTERPASSWORD}}
+
 ### All credentials
-GET http://localhost:3000/api/credentials/
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Valid credential request
-GET http://localhost:3000/api/credentials/google
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/google
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Invalid credential request
-GET http://localhost:3000/api/credentials/xyz
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/xyz
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Invalid credential request
-GET http://localhost:3000/api/credentials/google
+GET http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/google
 Authorization: wrongKey
 
 ### Add a new credential
-POST http://localhost:3000/api/credentials/
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
@@ -26,11 +30,11 @@ Authorization: {{$dotenv MASTERPASSWORD}}
 }
 
 ###
-DELETE http://localhost:3000/api/credentials/deleteme
+DELETE http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/deleteme
 Authorization: {{$dotenv MASTERPASSWORD}}
 
-### Add a new credential
-PUT http://localhost:3000/api/credentials/deleteme
+### Change a new credential
+PUT http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/deleteme
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
@@ -40,25 +44,35 @@ Authorization: {{$dotenv MASTERPASSWORD}}
     "password": "neuesPw"
 }
 
-### Add basis of DB
-POST http://localhost:3000/api/credentials/
+### Add basic entry 1
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
 Content-Type: application/json
 Authorization: {{$dotenv MASTERPASSWORD}}
 
-[
   {
     "service": "google",
     "username": "g00gle",
     "password": "strongPW"
-  },
+  }
+
+### Add basic entry 2
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
+Content-Type: application/json
+Authorization: {{$dotenv MASTERPASSWORD}}
+
   {
     "service": "facebook",
     "username": "f4ceb00k",
     "password": "smile"
-  },
+  }
+
+### Add basic entry 3
+POST http://localhost:{{$dotenv EXPRESS_PORT}}/api/credentials/
+Content-Type: application/json
+Authorization: {{$dotenv MASTERPASSWORD}}
+
   {
     "service": "twitter",
     "username": "vogel",
     "password": "peeeep"
   }
-]
