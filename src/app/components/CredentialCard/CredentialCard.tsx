@@ -21,13 +21,11 @@ export default function CredentialCard({
   const [password, setPassword] = useState<string>(credential.password);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    {
-      event.preventDefault();
-      if (await onSaveClick({ service, username, password })) {
-        if (mode === 'edit') setMode('view');
-      } else {
-        alert('ERROR');
-      }
+    event.preventDefault();
+    if (await onSaveClick({ service, username, password })) {
+      if (mode === 'edit') setMode('view');
+    } else {
+      alert('ERROR');
     }
   }
 
